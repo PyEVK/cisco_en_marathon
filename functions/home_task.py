@@ -7,7 +7,7 @@ from netmiko.ssh_exception import NetMikoAuthenticationException
 from netmiko.ssh_exception import NetMikoTimeoutException
 
 
-def home_task(device, backup_dir):
+def home_task(device, backup_dir, ntp_server):
     result = []
     try:
         with ConnectHandler(**device) as ssh:
@@ -21,7 +21,7 @@ def home_task(device, backup_dir):
 
             result.append(check_cdp_enabled(ssh))
 
-            result.append(clock_task(ssh))
+            result.append(clock_task(ssh, ntp_server))
 
             return '|'.join(result)
 

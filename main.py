@@ -17,6 +17,9 @@ devices_file_name = work_dir + "/conf/devices.yaml"
 # максимаьлное количество одновременных подключений
 worker_limit = 5
 
+# Сервер NTP
+ntp_server = "192.168.100.254"
+
 
 # Запуск скрипта
 if __name__ == "__main__":
@@ -30,7 +33,7 @@ if __name__ == "__main__":
 
     # Запуск "домашнего задания" параллельно
     with ThreadPoolExecutor(max_workers=worker_limit) as executor:
-        result = executor.map(home_task, devices, repeat(backup_dir))
+        result = executor.map(home_task, devices, repeat(backup_dir), repeat(ntp_server))
 
     # Вывод на экран результатов работы
     for item in result:
